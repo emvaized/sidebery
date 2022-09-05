@@ -1,10 +1,8 @@
-import { Settings } from 'src/services/settings'
 import { Styles } from 'src/services/styles'
 
-
-function main() {
+async function main() {
     const availableHash = window.location.hash.slice(1);
-    const input = document.getElementById('titleInput') as HTMLInputElement;
+    const input = document.getElementById('note-input') as HTMLInputElement;
 
     /// set note and input value from stored url hash
     if (availableHash) {
@@ -31,18 +29,19 @@ function main() {
     document.getElementById('h5')?.addEventListener('click', () => document.execCommand('formatBlock', false, '<h5>'))
     document.getElementById('p')?.addEventListener('click', () => document.execCommand('formatBlock', false, '<p>'))
 
-    // document.getElementById('copy')?.addEventListener('click', () => {
-    //     document.getElementById('titleInput')?.focus();
-    //     document.execCommand('selectAll');
-    //     document.execCommand('copy');
-    // })
+    /// sets css theme
+    Styles.initTheme()
+    Styles.initColorScheme()
+        .then(() => {
+            document.body.setAttribute('data-color-scheme', Styles.reactive.colorScheme || 'dark')
+        })
+        .catch(() => {
+            document.body.setAttribute('data-color-scheme', 'dark')
+        })
 }
 
 function onTitleChange(e: DOMEvent<Event, HTMLInputElement>): void {
-    // document.title = e.target.value.trim();
-    // window.location.hash = '#' + e.target.value.trim();
-
-    const value = document.getElementById('titleInput')?.innerHTML;
+    const value = document.getElementById('note-input')?.innerHTML;
     if (!value) return;
     document.title = value.trim().replace(/<[^>]*>?/gm, '');
     window.location.hash = '#' + value.trim();
