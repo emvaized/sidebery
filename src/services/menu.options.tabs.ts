@@ -279,6 +279,17 @@ export const tabsMenuOptions: Record<string, () => MenuOption | MenuOption[] | u
     return option
   },
 
+  createNote: () => {
+    const option: MenuOption = {
+      type: 'option',
+      label: translate('menu.tab.createNote'),
+      icon: 'icon_clipboard',
+      inactive: false,
+      onClick: () => Tabs.createNoteTab(Selection.get(), { active: true }),
+    }
+    return option
+  },
+
   flatten: () => {
     const option: MenuOption = {
       label: translate('menu.tab.flatten'),

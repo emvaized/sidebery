@@ -44,6 +44,27 @@ export async function replaceRelGroupWithPinnedTab(groupTab: Tab, pinnedTab: Tab
 }
 
 /**
+ * Create tab note
+ */
+export async function createNoteTab(tabIds: ID[], conf?: GroupConfig): Promise<void> {
+  const noConfig = !conf
+  if (!conf) conf = {}
+
+  // Get tabs
+  const tabs = []
+  for (const t of Tabs.list) {
+    if (tabIds.includes(t.id)) tabs.push(t)
+    else if (tabIds.includes(t.parentId)) {
+      tabIds.push(t.id)
+      tabs.push(t)
+    }
+  }
+
+  if (!tabs.length) return
+  Tabs.createChildTab(tabs[0].id, Utils.createNoteUrl(conf.title), tabs[0].cookieStoreId);
+}
+
+/**
  * Group tabs
  */
 export async function groupTabs(tabIds: ID[], conf?: GroupConfig): Promise<void> {

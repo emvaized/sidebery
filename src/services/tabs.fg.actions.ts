@@ -663,7 +663,7 @@ export function removeTabsAbove(tabIds: ID[]): void {
   if (!startTab || startTab.pinned) return
 
   const toRm = []
-  for (let i = startTab.index; i--; ) {
+  for (let i = startTab.index; i--;) {
     const tab = Tabs.list[i]
     if (!tab || tab.pinned || tab.panelId !== startTab.panelId) break
     toRm.push(tab.id)
@@ -960,7 +960,7 @@ export function switchTab(globaly: boolean, cycle: boolean, step: number, pinned
   ) {
     if (step > 0) targetTabId = panelTabs[0]?.id ?? NOID
     if (step < 0) {
-      for (let i = panelTabs.length, t; i--; ) {
+      for (let i = panelTabs.length, t; i--;) {
         t = panelTabs[i]
         if (visibleOnly && t.invisible) continue
         if (skipDiscarded && t.discarded) continue
@@ -1073,7 +1073,7 @@ export function reloadTabs(tabIds: ID[] = []): void {
         return tab && tab.reloadingChecks++ <= MAX_CHECK_COUNT && tab.status === 'loading'
       })
 
-      for (let i = Settings.state.tabsReloadLimit - loading.length; i-- > 0; ) {
+      for (let i = Settings.state.tabsReloadLimit - loading.length; i-- > 0;) {
         const nextTab = RELOADING_QUEUE.shift()
         if (!nextTab) break
         reloadingTabs.push(nextTab)
@@ -2149,7 +2149,7 @@ export function foldAllInactiveBranches(tabs: Tab[] = []): void {
     parent = Tabs.byId[parent.parentId]
   }
 
-  for (let tab, i = tabs.length; i--; ) {
+  for (let tab, i = tabs.length; i--;) {
     tab = tabs[i]
     if (tab.isParent && !tab.folded && !activeBranch.includes(tab.id)) {
       foldTabsBranch(tab.id)
@@ -2364,7 +2364,7 @@ export function updateTabsTree(startIndex = 0, endIndex = -1): void {
       // if prev tab is not parent and with smaller lvl
       // go back and set lvl and parentId
       if (prevTab && prevTab.id !== tab.parentId && prevTab.lvl < tab.lvl) {
-        for (let j = tab.index; j--; ) {
+        for (let j = tab.index; j--;) {
           const backTab = Tabs.list[j]
           if (backTab.id === parent.id) break
           if (backTab.panelId !== tab.panelId) break
@@ -2854,7 +2854,7 @@ export function findSuccessorTab(tab: Tab, exclude?: ID[]): Tab | undefined {
         else {
           // Search in pinned tabs in current panel
           if (panel.pinnedTabs.length) {
-            for (let i = panel.pinnedTabs.length; i--; ) {
+            for (let i = panel.pinnedTabs.length; i--;) {
               const pTab = panel.pinnedTabs[i]
               if (!pTab) break
               if (skipDiscarded && pTab.discarded) {
@@ -2919,7 +2919,7 @@ export function findSuccessorTab(tab: Tab, exclude?: ID[]): Tab | undefined {
     if (!history || !history.actTabs) return
 
     let targetId, prev
-    for (let i = history.actTabs.length; i--; ) {
+    for (let i = history.actTabs.length; i--;) {
       targetId = history.actTabs[i]
       prev = Tabs.byId[targetId]
 
@@ -3063,20 +3063,21 @@ export async function createFromDragEvent(e: DragEvent, dst: DstPlaceInfo): Prom
   }
 
   if (result?.text) {
-    let tabId: ID
-    if (inside && dst.parentId > -1 && e.shiftKey) tabId = dst.parentId
-    else {
-      setNewTabPosition(dst.index ?? 0, dst.parentId, panel.id)
-      const tab = await browser.tabs.create({
-        active: true,
-        index: dst.index,
-        cookieStoreId: container?.id,
-        windowId: Windows.id,
-        pinned: dst.pinned,
-      })
-      tabId = tab.id
-    }
-    browser.search.search({ query: result.text, tabId })
+    // let tabId: ID
+    // if (inside && dst.parentId > -1 && e.shiftKey) tabId = dst.parentId
+    // else {
+    setNewTabPosition(dst.index ?? 0, dst.parentId, panel.id)
+    const tab = await browser.tabs.create({
+      active: false,
+      index: dst.index,
+      cookieStoreId: container?.id,
+      windowId: Windows.id,
+      pinned: dst.pinned,
+      url: Utils.createNoteUrl(result.text),
+    })
+    // tabId = tab.id
+    // }
+    // browser.search.search({ query: result.text, tabId })
   }
 }
 

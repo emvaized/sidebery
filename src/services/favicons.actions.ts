@@ -5,7 +5,7 @@ import { IPC } from 'src/services/ipc'
 import { Store } from 'src/services/storage'
 import { Tabs } from 'src/services/tabs.fg'
 import { Info } from 'src/services/info'
-import { FILE_RE, GROUP_URL, IMG_RE, MUS_RE, SETUP_URL, URL_URL, VID_RE } from 'src/defaults'
+import { FILE_RE, GROUP_URL, NOTE_URL, IMG_RE, MUS_RE, SETUP_URL, URL_URL, VID_RE } from 'src/defaults'
 import { Logs } from './logs'
 
 const SAVE_DELAY = 2000
@@ -274,6 +274,8 @@ export function getFavPlaceholder(url: string): string {
     if (url.startsWith(GROUP_URL)) return '#icon_group'
     if (url.startsWith(URL_URL)) return '#icon_link_favicon'
     if (url.startsWith(SETUP_URL)) return '#icon_settings'
+    // if (url.startsWith(NOTE_URL)) return '#icon_clipboard'
+    if (url.startsWith(NOTE_URL)) return '#icon_edit'
   }
 
   if (IMG_RE.test(url)) return '#icon_img'

@@ -467,6 +467,15 @@ function createGroupUrl(name?: string, conf?: GroupConfig): string {
 }
 
 /**
+ * Tab notes
+ */
+function createNoteUrl(text?: string) {
+  let url = browser.runtime.getURL('page.note/note.html')
+  if (text) url += '#' + encodeURIComponent(text);
+  return url;
+}
+
+/**
  * Clone Array
  */
 export function cloneArray<T>(arr: T[]): T[] {
@@ -702,7 +711,7 @@ function decodePunycode(input: string): string {
   // Main decoding loop: start just after the last delimiter if any basic code
   // points were copied; start at the beginning otherwise.
 
-  for (let index = basic > 0 ? basic + 1 : 0; index < inputLength /* no final expression */; ) {
+  for (let index = basic > 0 ? basic + 1 : 0; index < inputLength /* no final expression */;) {
     // `index` is the index of the next character to be consumed.
     // Decode a generalized variable-length integer into `delta`,
     // which gets added to `i`. The overflow checking is easier
@@ -932,6 +941,7 @@ const Utils = {
   getGroupId,
   getGroupRawParams,
   createGroupUrl,
+  createNoteUrl,
   cloneArray,
   cloneObject,
   normalizeUrl,

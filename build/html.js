@@ -94,7 +94,7 @@ async function processFile(info) {
     }
   }
 
-  const outData = srcData.replace(SVG_RE, (m, p1) => svgs[p1].content ?? m)
+  const outData = srcData.replace(SVG_RE, (m, p1) => svgs[p1].content ? svgs[p1].content : m)
   await fs.promises.mkdir(outputDir, { recursive: true })
   await fs.promises.writeFile(path.join(outputDir, info.file), outData)
 }

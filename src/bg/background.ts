@@ -399,6 +399,7 @@ function upgradeTabsDataCache(oldStorage: Stored, newStorage: Stored): void {
       for (const tab of winTabs) {
         if (tab.url.startsWith(sideberyUrlBase)) {
           tab.url = tab.url.replace('/group/group.html', '/page.group/group.html')
+          tab.url = tab.url.replace('/note/note.html', '/page.note/note.html')
           tab.url = tab.url.replace('/url/url.html', '/page.url/url.html')
         }
       }
@@ -409,6 +410,7 @@ function upgradeTabsDataCache(oldStorage: Stored, newStorage: Stored): void {
       for (const tab of winTabs) {
         if (tab.url.startsWith(sideberyUrlBase)) {
           tab.url = tab.url.replace('/group/group.html', '/page.group/group.html')
+          tab.url = tab.url.replace('/note/note.html', '/page.note/note.html')
           tab.url = tab.url.replace('/url/url.html', '/page.url/url.html')
         }
       }

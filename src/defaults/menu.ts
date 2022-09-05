@@ -21,6 +21,7 @@ export const TABS_MENU: MenuConf = [
   'separator-3',
   'group',
   'flatten',
+  'createNote',
   'separator-4',
   'clearCookies',
   'close',

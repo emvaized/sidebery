@@ -13,6 +13,7 @@ const NORM_SRC_DIR = path.normalize(SRC_DIR)
 const TS_CONFIG = getTSConfig()
 const BUNDLES = {
   'src/page.group/group.ts': true,
+  'src/page.note/note.ts': true,
   'src/page.url/url.ts': true,
 }
 const IMPORT_RE = /(^|\n|\r\n|;)(im|ex)port\s?(.*?)"(\.\.?|src|vue)(\/.+?)?"/g
@@ -133,7 +134,7 @@ async function compileVueComponent(filePath, fileName) {
       console.log(colorize(`|r>${err.toString()}|x|`))
     }
   } else if (descriptor.script) {
-    script = descriptor.script?.content.trim()
+    script = descriptor.script.content.trim()
   }
   if (!script) script = '\nexport default {\n}\n'
 
@@ -303,7 +304,7 @@ async function main() {
     })
     // Bundled scripts for injecting
     await esbuild.build({
-      entryPoints: ['src/page.group/group.ts', 'src/page.url/url.ts'],
+      entryPoints: ['src/page.group/group.ts', 'src/page.note/note.ts', 'src/page.url/url.ts'],
       tsconfig: 'tsconfig.json',
       charset: 'utf8',
       splitting: false,
