@@ -282,7 +282,7 @@ export const tabsMenuOptions: Record<string, () => MenuOption | MenuOption[] | u
   createNote: () => {
     const option: MenuOption = {
       type: 'option',
-      label: translate('menu.tab.createNote'),
+      label: translate('menu.tab.create_note'),
       icon: 'icon_clipboard',
       inactive: false,
       onClick: () => Tabs.createNoteTab(Selection.get(), { active: true }),

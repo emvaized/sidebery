@@ -631,7 +631,7 @@ export const commonTranslations: Translations = {
     de: 'Gruppe',
     zh_CN: '分组',
   },
-  'menu.tab.createNote': {
+  'menu.tab.create_note': {
     en: 'Create note',
     ru: 'Создать заметку',
     de: 'Erstellen Sie eine Notiz',
