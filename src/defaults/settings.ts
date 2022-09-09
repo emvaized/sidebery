@@ -71,6 +71,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   openSubPanelOnMouseHover: false,
   colorizeTabs: false,
   colorizeTabsSrc: 'domain',
+  dragTextOnTabAction: 'search',
 
   // New tab position
   moveNewTabPin: 'start',
@@ -230,4 +231,5 @@ export const SETTINGS_OPTIONS = {
   colorizeTabsBranchesSrc: ['url', 'domain'],
   searchBarMode: ['static', 'dynamic', 'none'],
   newTabBarPosition: ['after_tabs', 'bottom'],
+  dragTextOnTabAction: ['search', 'create_note'],
 } as const

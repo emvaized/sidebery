@@ -2338,6 +2338,21 @@ export const setupPageTranslations: Translations = {
     ru: 'Только для несистемного контекстного меню',
     de: 'Nur bei nicht-nativem Kontextmenü',
   },
+  'settings.drag_text_on_tab_action': {
+    en: 'Action when drag-and-drop text on tab',
+    ru: 'Действие при перетаскивании текста на вкладку',
+    de: 'Aktion beim Ziehen und Ablegen von Text auf der Tab',
+  },
+  'settings.drag_text_on_tab_action_search': {
+    en: 'search in new tab',
+    ru: 'поиск в новой вкладке',
+    de: 'suche in neuem Tab',
+  },
+  'settings.drag_text_on_tab_action_create_note': {
+    en: 'create note',
+    ru: 'создать заметку',
+    de: 'notiz erstellen',
+  },
   'settings.long_click_delay': {
     en: 'Long click delay (ms)',
     ru: 'Задержка длительного нажатия (мс)',

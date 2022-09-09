@@ -54,6 +54,13 @@ section(ref="el")
     v-model:value="Settings.state.longClickDelay"
     :or="300"
     @update:value="Settings.saveDebounced(500)")
+  SelectField(
+    label="settings.drag_text_on_tab_action"
+    optLabel="settings.drag_text_on_tab_action_"
+    v-model:value="Settings.state.dragTextOnTabAction"
+    :opts="Settings.getOpts('dragTextOnTabAction')"
+    :folded="true"
+    @update:value="Settings.saveDebounced(150)")
   ToggleField(
     label="settings.wheel_threshold"
     v-model:value="Settings.state.wheelThreshold"
@@ -174,7 +181,7 @@ section(ref="el")
     :opts="Settings.getOpts('tabsPanelMiddleClickAction')"
     :folded="true"
     @update:value="Settings.saveDebounced(150)")
-  
+
   .sub-title {{translate('settings.mouse.bookmarks_title')}}
   SelectField(
     label="settings.mouse.bookmarks.left_click_action"

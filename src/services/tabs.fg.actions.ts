@@ -3063,21 +3063,32 @@ export async function createFromDragEvent(e: DragEvent, dst: DstPlaceInfo): Prom
   }
 
   if (result?.text) {
-    // let tabId: ID
-    // if (inside && dst.parentId > -1 && e.shiftKey) tabId = dst.parentId
-    // else {
-    setNewTabPosition(dst.index ?? 0, dst.parentId, panel.id)
-    const tab = await browser.tabs.create({
-      active: false,
-      index: dst.index,
-      cookieStoreId: container?.id,
-      windowId: Windows.id,
-      pinned: dst.pinned,
-      url: Utils.createNoteUrl(result.text),
-    })
-    // tabId = tab.id
-    // }
-    // browser.search.search({ query: result.text, tabId })
+    if (Settings.state.dragTextOnTabAction === 'search') {
+      let tabId: ID
+      if (inside && dst.parentId > -1 && e.shiftKey) tabId = dst.parentId
+      else {
+        setNewTabPosition(dst.index ?? 0, dst.parentId, panel.id)
+        const tab = await browser.tabs.create({
+          active: true,
+          index: dst.index,
+          cookieStoreId: container?.id,
+          windowId: Windows.id,
+          pinned: dst.pinned,
+        })
+        tabId = tab.id
+      }
+      browser.search.search({ query: result.text, tabId })
+    } else if (Settings.state.dragTextOnTabAction === 'create_note') {
+      setNewTabPosition(dst.index ?? 0, dst.parentId, panel.id)
+      const tab = await browser.tabs.create({
+        active: false,
+        index: dst.index,
+        cookieStoreId: container?.id,
+        windowId: Windows.id,
+        pinned: dst.pinned,
+        url: Utils.createNoteUrl(result.text),
+      })
+    }
   }
 }
 

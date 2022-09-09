@@ -71,6 +71,7 @@ export interface SettingsState {
   openSubPanelOnMouseHover: boolean
   colorizeTabs: boolean
   colorizeTabsSrc: typeof SETTINGS_OPTIONS.colorizeTabsSrc[number]
+  dragTextOnTabAction: typeof SETTINGS_OPTIONS.dragTextOnTabAction[number]
 
   // New tab position
   moveNewTabPin: typeof SETTINGS_OPTIONS.moveNewTabPin[number]
