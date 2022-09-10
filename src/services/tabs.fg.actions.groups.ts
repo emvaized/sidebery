@@ -60,8 +60,9 @@ export async function createNoteTab(tabIds: ID[], conf?: GroupConfig): Promise<v
     }
   }
 
-  if (!tabs.length) return
-  Tabs.createChildTab(tabs[0].id, Utils.createNoteUrl(conf.title), tabs[0].cookieStoreId);
+  const tabsLength = tabs.length;
+  if (!tabsLength) return
+  Tabs.createChildTab(tabs[tabsLength - 1].id, Utils.createNoteUrl(conf.title), tabs[tabsLength - 1].cookieStoreId);
 }
 
 /**
