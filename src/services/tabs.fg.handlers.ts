@@ -324,6 +324,13 @@ function onTabCreated(tab: Tab): void {
 
     if (Settings.state.colorizeTabs) Tabs.colorizeTabDebounced(tab.id)
     if (Settings.state.colorizeTabsBranches && tab.lvl > 0) Tabs.setBranchColor(tab.id)
+
+    // Scroll tab into view if it's not active or pinned
+    if (!tab.active && !tab.pinned) {
+      setTimeout(function () {
+        Tabs.scrollToTab(tab.id)
+      }, 0)
+    }
   }
 
   // Update succession
