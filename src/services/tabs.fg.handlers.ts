@@ -326,7 +326,7 @@ function onTabCreated(tab: Tab): void {
     if (Settings.state.colorizeTabsBranches && tab.lvl > 0) Tabs.setBranchColor(tab.id)
 
     // Scroll tab into view if it's not active or pinned
-    if (!tab.active && !tab.pinned) {
+    if (!tab.active && !tab.pinned && tab.panelId === Sidebar.reactive.activePanelId) {
       setTimeout(function () {
         Tabs.scrollToTab(tab.id)
       }, 0)
