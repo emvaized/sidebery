@@ -2,6 +2,16 @@
 .ScrollBox(ref="el" @wheel="onWheel")
   .top-shadow(:data-show="state.topOverflow")
   .bottom-shadow(:data-show="state.bottomOverflow")
+  .top-overscroll-button(:data-show="state.topOverflow")
+  .top-overscroll-tab(
+    :data-show="state.tabTopOverflow" 
+     @mousedown.stop="onTabOverscrollMouseUp"
+  )
+  .bottom-overscroll-tab(
+    :data-show="state.tabBottomOverflow"
+     @mousedown.stop="onTabOverscrollMouseUp"
+  )
+  .bottom-shadow(:data-show="state.bottomOverflow")
   .scroll-container(ref="scrollBoxEl" tabindex="-1" @scroll.passive="recalcScroll(true)")
     .scrollable(ref="scrollContentEl")
       slot
@@ -12,6 +22,7 @@ import { reactive, ref, onMounted, onBeforeUnmount } from 'vue'
 import { ScrollBoxComponent } from 'src/types'
 import * as Utils from 'src/utils'
 import * as Logs from 'src/services/logs'
+import { Tabs } from 'src/services/tabs.fg'
 
 let recalcScrollOnResize: Utils.FuncCtx | null = null
 let resizeObserver: ResizeObserver | null = null
@@ -63,8 +74,12 @@ function recalcScroll(bottomEvent?: boolean): void {
   contentHeight = scrollContentEl.value.offsetHeight
   let contentY = scrollBoxEl.value.scrollTop
 
-  if (!state.topOverflow && contentY > 3) state.topOverflow = true
-  if (state.topOverflow && contentY < 4) state.topOverflow = false
+  if (!state.topOverflow && contentY > 3) {
+    state.topOverflow = true
+  } 
+  if (state.topOverflow && contentY < 4) {
+     state.topOverflow = false
+  }
 
   if (!state.bottomOverflow && contentHeight - contentY - _preScroll > boxHeight) {
     state.bottomOverflow = true
@@ -72,6 +87,25 @@ function recalcScroll(bottomEvent?: boolean): void {
   if (state.bottomOverflow && contentHeight - contentY - _preScroll <= boxHeight) {
     state.bottomOverflow = false
     if (bottomEvent) emit('bottom')
+  }
+
+  const elId = 'tab' + Tabs.activeId.toString()
+  const el = document.getElementById(elId)
+  if (!el) return Logs.warn('recalcScroll: Cannot find active tab element')
+  const tH = el.offsetHeight
+  const tY = el.offsetTop
+  if (!state.tabTopOverflow && tY < contentY - tH) {
+     OverscrollButton.state.tabTopOverflow = true
+  }
+  if (state.tabTopOverflow && tY > contentY - tH) {
+     OverscrollButton.state.tabTopOverflow = false
+  }
+
+  if (!state.tabBottomOverflow && tY > contentY + boxHeight + tH) {
+     OverscrollButton.state.tabBottomOverflow = true
+  }
+  if (state.tabBottomOverflow && tY < contentY + boxHeight + tH) {
+     OverscrollButton.state.tabBottomOverflow = false
   }
 }
 
@@ -86,6 +120,12 @@ function getScrollBox(): HTMLElement | null {
 
 function getScrollableBox(): HTMLElement | null {
   return scrollContentEl.value
+}
+
+function onTabOverscrollMouseUp(e: MouseEvent): void {
+  e.preventDefault()
+  e.stopPropagation()
+  Tabs.scrollToTab(Tabs.activeId, true)
 }
 
 const publicInterface: ScrollBoxComponent = {
