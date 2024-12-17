@@ -577,6 +577,24 @@
   color: var(--tabs-activated-fg)
 
 // ---
+// -- Subtitle
+// -
+.Tab .subtitle{
+	position: relative;
+  color: var(--tabs-normal-fg);
+  white-space: nowrap;
+  overflow: hidden;
+  transition: transform var(--d-fast);
+  padding-top: 1px;
+}
+
+.Tab[data-audible="true"] .t-box .subtitle,
+.Tab[data-muted="true"] .t-box .subtitle,
+.Tab[data-paused="true"] .t-box .subtitle{
+  transform: translateX(var(--audio-btn-offset));
+}
+
+// ---
 // -- Container highlight
 // -
 .Tab .ctx
